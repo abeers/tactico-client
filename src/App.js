@@ -1,5 +1,5 @@
 import './App.css'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Col } from 'react-bootstrap'
 import GameBoard from './components/GameBoard.js'
 
 function App() {
