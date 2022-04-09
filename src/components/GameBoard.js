@@ -13,7 +13,11 @@ const GameBoard = () => {
 
     const [currentPlayer, setCurrentPlayer] = useState('x')
 
+    const [isAttacking, setIsAttacking] = useState(false)
+
     const changePlayer = () => currentPlayer === 'x' ? setCurrentPlayer('o') : setCurrentPlayer('x')
+
+    const changeAttacking = () => setIsAttacking(!isAttacking)
     
     const onNewGameClick = () => {
         axios({
@@ -30,6 +34,7 @@ const GameBoard = () => {
                 id: cell._id,
                 row: cell.row,
                 value: currentPlayer,
+                isAttacking
             }
 
             axios({
@@ -38,7 +43,12 @@ const GameBoard = () => {
                 data: newCellData,
             })
                 .then((response) => setGameBoard(response.data.game))
-                .then(changePlayer)
+                .then(() => {
+                    if (!isAttacking) {
+                        changePlayer()
+                    }
+                    changeAttacking()
+                })
                 .catch(console.error)
         }
         
@@ -49,7 +59,7 @@ const GameBoard = () => {
 				{gameBoard.isOver ? (
 					<p>{gameBoard.winner}, you've won!</p>
 				) : (
-					<p>{currentPlayer}, it's your turn!</p>
+					<p>{currentPlayer}, it's your turn to {isAttacking ? 'attack' : 'defend'} a square!</p>
 				)}
 
 				<Container>
