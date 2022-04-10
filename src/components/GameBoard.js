@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Container, Row, Button } from 'react-bootstrap'
 import axios from 'axios'
 
+import { initiateSocketConnection, disconnectSocket, listenForUpdatedGame } from '../socketService.js'
 import Cell from './Cell.js'
 
 const GameBoard = () => {
@@ -15,9 +16,20 @@ const GameBoard = () => {
 
     const [isAttacking, setIsAttacking] = useState(false)
 
+    useEffect(() => {
+        console.log('In useEffect')
+        initiateSocketConnection()
+        listenForUpdatedGame(setGameBoard)
+
+        return () => disconnectSocket()
+    }, [])
+
     const changePlayer = () => currentPlayer === 'x' ? setCurrentPlayer('o') : setCurrentPlayer('x')
 
-    const changeAttacking = () => setIsAttacking(!isAttacking)
+    const changeAttacking = () => {
+        console.log('here')
+        setIsAttacking(!isAttacking)
+    }
     
     const onNewGameClick = () => {
         axios({
@@ -42,7 +54,7 @@ const GameBoard = () => {
                 method: 'PATCH',
                 data: newCellData,
             })
-                .then((response) => setGameBoard(response.data.game))
+                // .then((response) => setGameBoard(response.data.game))
                 .then(() => {
                     if (!isAttacking) {
                         changePlayer()
