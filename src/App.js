@@ -5,13 +5,13 @@ import './App.css'
 
 function App() {
   return (
-		<Container>
-			<h1>Tactico</h1>
-			<Col xs={{ span: 6, offset: 3 }}>
-				<GameBoard />
-			</Col>
-		</Container>
-	)
+    <Container>
+      <h1>Tactico</h1>
+      <Col xs={{ span: 6, offset: 3 }}>
+        <GameBoard />
+      </Col>
+    </Container>
+  )
 }
 
 export default App
