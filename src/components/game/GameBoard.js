@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Container, Row, Button } from 'react-bootstrap'
 
-import { newGame, updateGame } from '../api/games.js'
+import { newGame, updateGame } from '../../api/games.js'
 import {
   initiateSocketConnection,
   disconnectSocket,
   listenForUpdatedGame,
-} from '../socketService.js'
+} from '../../socketService.js'
 import Cell from './Cell.js'
 
 const GameBoard = () => {
