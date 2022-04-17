@@ -15,3 +15,24 @@ export const signIn = (data) => {
     data: { credentials: data },
   })
 }
+
+export const changePassword = (data, token) => {
+  return axios({
+    url: 'http://localhost:4741/change-password',
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { passwords: data },
+  })
+}
+
+export const signOut = (token) => {
+  return axios({
+    url: 'http://localhost:4741/sign-out',
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}

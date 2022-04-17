@@ -1,16 +1,24 @@
+import { useState } from 'react'
 import { Container, Col } from 'react-bootstrap'
 
 import SignUpForm from './components/auth/SignUpForm.js'
 import SignInForm from './components/auth/SignInForm.js'
+import ChangePasswordForm from './components/auth/ChangePasswordForm.js'
+import SignOutButton from './components/auth/SignOutButton.js'
 import GameBoard from './components/game/GameBoard.js'
 import './App.css'
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState({
+    token: '',
+  })
   return (
     <Container>
       <h1>Tactico</h1>
-      <SignUpForm />
-      <SignInForm />
+      <SignUpForm setUser={setUser} />
+      <SignInForm setUser={setUser} />
+      <ChangePasswordForm token={user.token} />
+      <SignOutButton token={user.token} />
       <Col xs={{ span: 6, offset: 3 }}>
         <GameBoard />
       </Col>

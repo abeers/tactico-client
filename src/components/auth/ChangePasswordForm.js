@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-import { signIn } from '../../api/auth'
+import { changePassword } from '../../api/auth'
 
-const SignInForm = ({ setUser }) => {
+const ChangePasswordForm = ({ token }) => {
   const [formData, setFormData] = useState({
-    identifier: '',
-    password: '',
+    oldPassword: '',
+    newPassword: '',
   })
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    signIn(formData).then((response) => setUser(response.data.user))
+    changePassword(formData, token).then(console.log)
   }
 
   const handleChange = (event) => {
@@ -24,29 +24,29 @@ const SignInForm = ({ setUser }) => {
     setFormData(updatedData)
   }
 
-  const { identifier, password } = formData
+  const { oldPassword, newPassword } = formData
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId='username'>
-        <Form.Label>Username or Email Address</Form.Label>
+      <Form.Group controlId='oldPassword'>
+        <Form.Label>Old Password</Form.Label>
         <Form.Control
           required
-          type='text'
-          name='identifier'
-          value={identifier}
-          placeholder='Enter username or email address'
+          type='password'
+          name='oldPassword'
+          value={oldPassword}
+          placeholder='Enter old password'
           onChange={handleChange}
         />
       </Form.Group>
-      <Form.Group controlId='password'>
-        <Form.Label>Password</Form.Label>
+      <Form.Group controlId='newPassword'>
+        <Form.Label>New Password</Form.Label>
         <Form.Control
           required
-          name='password'
-          value={password}
+          name='newPassword'
+          value={newPassword}
           type='password'
-          placeholder='Password'
+          placeholder='Enter new password'
           onChange={handleChange}
         />
       </Form.Group>
@@ -57,4 +57,4 @@ const SignInForm = ({ setUser }) => {
   )
 }
 
-export default SignInForm
+export default ChangePasswordForm
