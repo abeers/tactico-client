@@ -2,9 +2,13 @@ import { Button } from 'react-bootstrap'
 
 import { signOut } from '../../api/auth'
 
-const SignOutButton = ({ token }) => {
+const SignOutButton = ({ token, setUser }) => {
   const handleClick = () => {
-    signOut(token).then(console.log)
+    signOut(token).then(() => {
+      setUser((prevUser) => {
+        return { ...prevUser, token: null }
+      })
+    })
   }
 
   return (

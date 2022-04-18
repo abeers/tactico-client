@@ -10,18 +10,27 @@ import './App.css'
 
 const App = () => {
   const [user, setUser] = useState({
-    token: '',
+    token: null,
   })
   return (
     <Container>
       <h1>Tactico</h1>
-      <SignUpForm setUser={setUser} />
-      <SignInForm setUser={setUser} />
-      <ChangePasswordForm token={user.token} />
-      <SignOutButton token={user.token} />
-      <Col xs={{ span: 6, offset: 3 }}>
-        <GameBoard />
-      </Col>
+      {!user.token && (
+        <>
+          <SignUpForm setUser={setUser} />
+          <SignInForm setUser={setUser} />
+        </>
+      )}
+
+      {user.token && (
+        <>
+          <ChangePasswordForm token={user.token} />
+          <SignOutButton token={user.token} setUser={setUser} />
+          <Col xs={{ span: 6, offset: 3 }}>
+            <GameBoard />
+          </Col>
+        </>
+      )}
     </Container>
   )
 }
